@@ -1,0 +1,7 @@
+luci-proto-wireguard-ip6prefix
+Copyright 2026 nagual2
+
+This package overlays stock luci-proto-wireguard wireguard.js to add
+the ip6prefix field in the General Settings tab.
+
+Upstream LuCI wireguard.js is Copyright OpenWrt contributors (Apache-2.0).

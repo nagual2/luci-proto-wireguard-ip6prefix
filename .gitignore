@@ -1,0 +1,6 @@
+/build/
+/dist/
+/htdocs/
+*.ipk
+*.apk
+!dist/.gitkeep

@@ -1,96 +1,69 @@
-# LuCI WireGuard IPv6 Routed Prefix Support
+# luci-proto-wireguard-ip6prefix
 
-Патч для LuCI (OpenWrt Web Interface), добавляющий поддержку поля **IPv6 routed prefix** (`ip6prefix`) для WireGuard интерфейсов.
+LuCI overlay for OpenWrt: adds **IPv6 routed prefix** (`ip6prefix`) to the WireGuard interface **General Settings** tab.
 
-## Описание
+Package name `luci-proto-wireguard-ip6prefix` — does **not** replace stock `luci-proto-wireguard`; it installs a patched `wireguard.js` copy on post-install.
 
-Стандартный `luci-proto-wireguard` не предоставляет удобного способа настроить IPv6 префикс для WireGuard интерфейсов через веб-интерфейс. Этот патч добавляет поле "IPv6 routed prefix" в раздел **General Settings**, аналогично другим протоколам (например, 6in4).
+## Why
 
-Это необходимо для:
-- **Prefix Delegation** — делегирования IPv6 префиксов клиентам
-- **Маршрутизации IPv6** — корректной работы IPv6 через WireGuard туннель
-- **SLAAC** — автоматической конфигурации адресов клиентами
+Stock `luci-proto-wireguard` hides `ip6prefix` in Advanced or uses non-standard fields. This overlay matches other protocols (e.g. 6in4) for Prefix Delegation and IPv6 routing over WireGuard.
 
-## Файлы
-
-| Файл | Описание |
-|------|----------|
-| `wireguard-ip6prefix.patch` | Патч для `wireguard.js` |
-| `test-wireguard-patch.sh` | Скрипт тестирования на OpenWrt |
-| `luci-proto-wireguard_26.088.70222-1_all.ipk` | Готовый бинарный пакет |
-
-## Установка
-
-### Способ 1: Установка готового пакета (рекомендуется)
+## Build
 
 ```bash
-# Скопируйте .ipk на роутер
-scp luci-proto-wireguard_26.088.70222-1_all.ipk root@openwrt:/tmp/
-
-# Установите
-ssh root@openwrt 'opkg install /tmp/luci-proto-wireguard_26.088.70222-1_all.ipk'
-
-# Перезагрузите веб-интерфейс
-/etc/init.d/uhttpd restart
+make -f Makefile.build all
+# dist/luci-proto-wireguard-ip6prefix-1.0.0-r1.apk
+# dist/luci-proto-wireguard-ip6prefix_1.0.0-1_all.ipk
 ```
 
-### Способ 2: Ручное применение патча
+Prerequisites: `python3`, OpenWrt SDK `apk` tool (auto-downloaded on first build).
+
+## Install (OpenWrt 25.12+, apk)
 
 ```bash
-# Скопируйте патч на роутер
-scp wireguard-ip6prefix.patch root@openwrt:/tmp/
-
-# Примените
-ssh root@openwrt '
-    cd /usr/share/luci/resources/protocol/
-    cp wireguard.js wireguard.js.backup
-    patch -p3 < /tmp/wireguard-ip6prefix.patch
-    /etc/init.d/uhttpd restart
-'
+./scripts/install-apk.sh root@192.168.35.1
+./scripts/verify-apk-pins.sh 192.168.35.1
 ```
 
-## Использование
-
-После установки откройте:
-```
-Network → Interfaces → [Ваш WireGuard интерфейс] → Edit
-```
-
-В разделе **General Settings** появится поле:
-- **IPv6 routed prefix** — введите префикс (например, `2001:db8::/56`)
-
-## Тестирование
-
-Используйте скрипт `test-wireguard-patch.sh` для автоматической проверки на OpenWrt:
+Manual:
 
 ```bash
-scp wireguard-ip6prefix.patch test-wireguard-patch.sh root@openwrt:/tmp/
-ssh root@openwrt 'sh /tmp/test-wireguard-patch.sh'
+scp dist/luci-proto-wireguard-ip6prefix-*.apk root@router:/tmp/
+ssh root@router 'apk add --allow-untrusted /tmp/luci-proto-wireguard-ip6prefix-*.apk'
 ```
 
-Скрипт проверит:
-- Синтаксис JavaScript
-- Наличие поля `ip6prefix`
-- Корректную работу UCI конфигурации
+## Usage
 
-## Технические детали
+**Network → Interfaces → [WireGuard] → Edit → General Settings → IPv6 routed prefix**
 
-Патч изменяет файл `protocols/luci-proto-wireguard/htdocs/luci-static/resources/protocol/wireguard.js`:
+Example: `2001:db8::/56`
 
-- Добавляет `ip6prefix` как `DynamicList` в таб **general**
-- Удаляет дублирующуюся запись из таба **advanced**
-- Заменяет нестандартное `pd_prefix` на стандартное `ip6prefix`
+## Releases
 
-## Совместимость
+Pre-built packages: [GitHub Releases](https://github.com/nagual2/luci-proto-wireguard-ip6prefix/releases)
 
-- OpenWrt 23.05+
-- LuCI (любая современная версия с `luci-proto-wireguard`)
-- Требует `kmod-wireguard` и `wireguard-tools`
+## Files
 
-## Лицензия
+| Path | Role |
+|------|------|
+| `wireguard.js.orig` | Upstream LuCI `wireguard.js` baseline |
+| `wireguard-ip6prefix.patch` | Reference patch |
+| `scripts/patch-wireguard-js.py` | Build-time patcher |
+| `scripts/build-apk-mkpkg.sh` | APK builder |
+| `Makefile.build` | APK + IPK targets |
 
-Как и оригинальный LuCI — Apache-2.0
+## Compatibility
 
-## Автор
+- OpenWrt 25.12+ (apk) — primary target
+- OpenWrt 23.x (opkg) — IPK in `dist/`
+- Depends on `luci-proto-wireguard` (version pinned in APK metadata)
+
+## License
+
+Apache-2.0 (same as upstream LuCI wireguard.js)
+
+## Author
 
 Max <nahual15@gmail.com>
+
+Русская документация: [README.ru.md](README.ru.md)
