@@ -1,5 +1,7 @@
 # luci-proto-wireguard-ip6prefix
 
+[English](README.md) | **Русский** | [Deutsch](README.de.md)
+
 Оверлей для LuCI (OpenWrt): поле **IPv6 routed prefix** (`ip6prefix`) в разделе **General Settings** интерфейса WireGuard.
 
 Отдельный пакет `luci-proto-wireguard-ip6prefix` — не заменяет stock `luci-proto-wireguard`, а копирует патченный `wireguard.js` при установке.
@@ -18,6 +20,17 @@ make -f Makefile.build all
 ./scripts/install-apk.sh root@192.168.35.1
 ./scripts/verify-apk-pins.sh 192.168.35.1
 ```
+
+### r1 vs r2 (версия LuCI)
+
+APK зависит от установленной версии `luci-proto-wireguard`:
+
+| LuCI на роутере | APK |
+|-----------------|-----|
+| ~26.143 | `1.0.0-r1` (dev) |
+| ~26.138 | `1.0.0-r2` (prod mediatek) |
+
+Проверка: `apk policy luci-proto-wireguard`
 
 Или вручную:
 

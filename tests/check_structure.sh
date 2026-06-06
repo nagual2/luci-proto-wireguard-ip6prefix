@@ -12,6 +12,7 @@ required=(
 	LICENSE
 	README.md
 	README.ru.md
+	README.de.md
 	wireguard-ip6prefix.patch
 	scripts/build-apk-mkpkg.sh
 	scripts/install-apk.sh

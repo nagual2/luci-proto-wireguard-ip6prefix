@@ -1,5 +1,7 @@
 # luci-proto-wireguard-ip6prefix
 
+**English** | [Русский](README.ru.md) | [Deutsch](README.de.md)
+
 LuCI overlay for OpenWrt: adds **IPv6 routed prefix** (`ip6prefix`) to the WireGuard interface **General Settings** tab.
 
 Package name `luci-proto-wireguard-ip6prefix` — does **not** replace stock `luci-proto-wireguard`; it installs a patched `wireguard.js` copy on post-install.
@@ -24,6 +26,17 @@ Prerequisites: `python3`, OpenWrt SDK `apk` tool (auto-downloaded on first build
 ./scripts/install-apk.sh root@192.168.35.1
 ./scripts/verify-apk-pins.sh 192.168.35.1
 ```
+
+### r1 vs r2 (LuCI version)
+
+APK depends on installed `luci-proto-wireguard` version (`LUCI_WG_VERSION` in build script):
+
+| Router LuCI | APK release |
+|-------------|-------------|
+| ~26.143 | `1.0.0-r1` (dev) |
+| ~26.138 | `1.0.0-r2` (prod mediatek) |
+
+Check: `apk policy luci-proto-wireguard`
 
 Manual:
 
