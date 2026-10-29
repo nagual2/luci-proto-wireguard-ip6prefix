@@ -28,7 +28,7 @@ for f in "${required[@]}"; do
 done
 
 python3 scripts/patch-wireguard-js.py wireguard.js.orig /tmp/wg-patched-test.js
-grep -q "taboption('general',form.DynamicList,'ip6prefix'" /tmp/wg-patched-test.js
+grep -q "taboption('general', form.DynamicList, 'ip6prefix'" /tmp/wg-patched-test.js
 rm -f /tmp/wg-patched-test.js
 
 echo "structure OK"
