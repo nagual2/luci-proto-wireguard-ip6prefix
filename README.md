@@ -27,14 +27,15 @@ Prerequisites: `python3`, OpenWrt SDK `apk` tool (auto-downloaded on first build
 ./scripts/verify-apk-pins.sh 192.168.35.1
 ```
 
-### r1 vs r2 (LuCI version)
+### Release vs LuCI version
 
 APK depends on installed `luci-proto-wireguard` version (`LUCI_WG_VERSION` in build script):
 
 | Router LuCI | APK release |
 |-------------|-------------|
-| ~26.143 | `1.0.0-r1` (dev) |
-| ~26.138 | `1.0.0-r2` (prod mediatek) |
+| ~26.288 | `1.0.1-r1` (OpenWrt 25.12.6, dev) |
+| ~26.143 | `1.0.0-r1` (legacy, 25.12.4) |
+| ~26.138 | `1.0.0-r2` (legacy, prod mediatek) |
 
 Check: `apk policy luci-proto-wireguard`
 

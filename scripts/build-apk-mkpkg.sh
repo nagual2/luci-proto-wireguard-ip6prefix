@@ -3,7 +3,7 @@
 #
 # Usage:
 #   ./scripts/build-apk-mkpkg.sh
-#   LUCI_WG_VERSION=26.143.25613~74927c2 ./scripts/build-apk-mkpkg.sh
+#   LUCI_WG_VERSION=26.288.56989~75a306d ./scripts/build-apk-mkpkg.sh
 
 set -euo pipefail
 
@@ -14,7 +14,7 @@ APK_TOOL="${APK_TOOL:-$SDK_DIR/staging_dir/host/bin/apk}"
 
 PROJECT_VERSION="${PROJECT_VERSION:-1.0.0}"
 PKG_RELEASE="${PKG_RELEASE:-1}"
-LUCI_WG_VERSION="${LUCI_WG_VERSION:-26.143.25613~74927c2}"
+LUCI_WG_VERSION="${LUCI_WG_VERSION:-26.288.56989~75a306d}"
 PKG_VERSION="${PROJECT_VERSION}-r${PKG_RELEASE}"
 
 log() { printf '[build-apk-mkpkg] %s\n' "$*"; }

@@ -10,7 +10,7 @@ PKG_RELEASE ?= 1
 .PHONY: test
 test:
 > @bash tests/check_structure.sh
-LUCI_WG_VERSION ?= 26.143.25613~74927c2
+LUCI_WG_VERSION ?= 26.288.56989~75a306d
 
 OUTPUT_DIR ?= dist
 WORK_DIR := build/ipk

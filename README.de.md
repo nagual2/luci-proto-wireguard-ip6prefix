@@ -34,14 +34,15 @@ scp dist/luci-proto-wireguard-ip6prefix-*.apk root@router:/tmp/
 ssh root@router 'apk add --allow-untrusted /tmp/luci-proto-wireguard-ip6prefix-*.apk'
 ```
 
-### r1 vs r2 (LuCI-Version)
+### Release vs LuCI-Version
 
 Das APK hängt von der installierten `luci-proto-wireguard`-Version ab (`LUCI_WG_VERSION` in `scripts/build-apk-mkpkg.sh`):
 
 | Router-LuCI | APK-Release |
 |-------------|-------------|
-| ~26.143 | `1.0.0-r1` (dev) |
-| ~26.138 | `1.0.0-r2` (prod mediatek) |
+| ~26.288 | `1.0.1-r1` (OpenWrt 25.12.6, dev) |
+| ~26.143 | `1.0.0-r1` (legacy, 25.12.4) |
+| ~26.138 | `1.0.0-r2` (legacy, prod mediatek) |
 
 Prüfen: `apk policy luci-proto-wireguard`
 
